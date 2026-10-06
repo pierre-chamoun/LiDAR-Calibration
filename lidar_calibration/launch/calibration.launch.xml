@@ -1,0 +1,17 @@
+<launch>
+    <arg name="bag_path" default="/path/to/your/bag/data.db3"/>
+    <arg name="config" default="$(find-pkg-share lidar_calibration)/config/config.yaml"/>
+    <arg name="source_topic" default="/ouster0"/>
+    <arg name="target_topic" default="/ouster1"/>
+    <arg name="output_dir" default="output"/>
+    <arg name="start_offset_scans" default="0"/>
+
+    <node pkg="lidar_calibration" exec="lidar_calibration_node" name="lidar_calibration_node" output="screen">
+        <param from="$(var config)"/>
+        <param name="output_dir" value="$(var output_dir)"/>
+        <param name="bag_path" value="$(var bag_path)"/>
+        <param name="source_topic" value="$(var source_topic)"/>
+        <param name="target_topic" value="$(var target_topic)"/>
+        <param name="preprocessing.start_offset_scans" value="$(var start_offset_scans)"/>
+    </node>
+</launch>

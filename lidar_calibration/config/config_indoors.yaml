@@ -1,0 +1,32 @@
+/**:
+  ros__parameters:
+
+    # Initial guess: translation (meters) and euler angles (degrees)
+    initial_guess:
+      tx: 1.25
+      ty: 0.06
+      tz: 0.0
+      roll: 0.0
+      pitch: 0.0
+      yaw: 0.0
+
+    preprocessing:
+      batch_stride: 100   # scans between mini-batch starts (<= batch size = run back-to-back)
+      batch_count: 20   # number of mini-batches to run (-1 = unlimited)
+      voxel_size: 0.3   # voxel grid leaf size (meters)
+
+    gicp:
+      k_neighbors: 20
+      max_correspondence_distance_voxels: 1.2  # multiple of voxel_size
+      max_iterations: 10
+      chain_length: 1   # intervals per mini-batch (source scans = chain_length + 1)
+      twist_tolerance: 1.0e-3      # outer-loop convergence tolerance on twists
+      extrinsic_tolerance: 1.0e-4  # outer-loop convergence tolerance on extrinsics
+
+    bootstrap:
+      n: 100
+      noise_sigma_phi_deg: 0.05859375
+      noise_sigma_theta_deg: 0.46875
+      noise_sigma_r_bins:
+        max_range_m: [1.0, 20.0, 50.0, 1.0e9]
+        sigma_r_m:   [0.007, 0.010, 0.020, 0.050]

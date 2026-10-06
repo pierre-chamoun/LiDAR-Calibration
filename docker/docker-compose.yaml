@@ -1,0 +1,27 @@
+services:
+  lidar_calibration:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+        USERNAME: ${USER:-user}
+    image: lidar_calibration_image
+    container_name: lidar_calibration_container
+    privileged: true
+    network_mode: host
+    stdin_open: true
+    tty: true
+    environment:
+      - DISPLAY=${DISPLAY}
+    volumes:
+      - /etc/localtime:/etc/localtime:ro
+      - /etc/timezone:/etc/timezone:ro
+      - /tmp/.X11-unix:/tmp/.X11-unix
+      - ..:/home/${USER:-user}/ros_ws/src/ # mount project directory
+      - ${HOME}/projects/datasets:/home/${USER:-user}/datasets # mount local datasets directory
+      - ${HOME}/projects/decar_codebases/navlie:/home/${USER:-user}/navlie # mount local navlie codebase
+
+    working_dir: /home/${USER:-user}
+    command: /bin/bash
